@@ -7,6 +7,7 @@ import useSortTasks from "../hooks/useSortTasks";
 import ButtonsSort from "../TasksSection/ButtonsSort";
 import TaskItem from "../TasksSection/TaskItem/TaskItem";
 import { checkBalance } from "../../store/Explorers";
+import { ReactComponent as External } from "../../assets/external.svg"
 
 type Props = {
   title: string;
@@ -19,15 +20,42 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
   // const [isListInView1, setIsListInView1] = useState<boolean>(false);
 
   const currentWallet = wallet[0]
-  const [balances, setBalances] = useState<string[]>();
-  const address = currentWallet.address;
+  
+  interface BalanceObject {
+    chain: string;
+    explorer: string;
+    balance: string;
+    address: string;
+  }
+  
+  const [balances, setBalances] = useState<BalanceObject[]>();
+
+  // useEffect(() => {
+  //   const handleCheckBalances = async () => {
+  //     const balancePromises = chains.map((chain) => checkBalance( currentWallet.address, chain.explorer, chain.apiKey));
+  //     const balanceEthValues = await Promise.all(balancePromises);
+  //     const balanceStrings = balanceEthValues.map((balance) => balance?.toFixed(2) || '0');
+  //     const balancesObject = Object.fromEntries(chains.map((chain, i) => [chain.ticker, balanceStrings[i]]));
+  //     setBalances(balancesObject);
+  //     console.log(balances)
+  //   };
+  //   handleCheckBalances();
+  //   console.log(balances)
+  // }, [wallet]);
 
   useEffect(() => {
     const handleCheckBalances = async () => {
-      const balancePromises = chains.map((chain) => checkBalance( currentWallet.address, chain.explorer, chain.apiKey));
-      const balanceEthValues = await Promise.all(balancePromises);
-      const balanceStrings = balanceEthValues.map((balance) => balance?.toFixed(2) || '0');
-      setBalances(balanceStrings);
+      const balancePromises = chains.map((chain, i) => 
+        checkBalance( currentWallet.address, chain.explorer, chain.apiKey).then((balance) => ({
+          chain: chain.ticker,
+          explorer: chain.explorer,
+          balance: balance?.toFixed(2) || '0',
+          address: currentWallet.address,
+        }))      
+      );
+      const balancesArray: BalanceObject[] = await Promise.all(balancePromises);
+      setBalances(balancesArray);
+      console.log(balances)
     };
     handleCheckBalances();
     console.log(balances)
@@ -47,9 +75,27 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
 
   return (
     <section>
-      <h1 className="font-medium my-5 text-center sm:text-left sm:my-8 md:text-2xl text-lg dark:text-slate-200">
+      <h1 className="font-medium my-5 text-center sm:text-left sm:my-8 md:text-2xl text-lg dark:text-slate-200 flex">
         {title}
+        {/* <a className="mx-0 my-auto pl-1" href={`https://etherscan.io/address/${wallet[0].address}`}>
+          <External className="w-5 h-5" />
+        </a> */}
       </h1>
+      <div>
+        
+      </div>
+
+      <div>
+      {balances &&
+        Object.entries(balances).map(([chain, balanceObj]) => (
+          <div className="flex" key={chain}>
+            <p>{balanceObj.chain}: {balanceObj.balance}</p>
+            <a className="mx-0 my-auto pl-1" href={`${balanceObj.explorer}/address/${balanceObj.address}`}>
+              <External className="w-5 h-5" />
+            </a>
+          </div>
+        ))}
+      </div>
       {/* <ButtonsSort
         isListInView1={isListInView1}
         setIsListInView1={setIsListInView1}
