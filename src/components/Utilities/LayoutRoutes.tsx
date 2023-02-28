@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Task } from "../../interfaces";
 import { Wallet, chains, BalanceObject, NormalTxObject, InternalTxObject } from "../../interfaces";
 import { useAppDispatch } from "../../store/hooks";
-import { modalActions } from "../../store/Modal.store";
-import useSortTasks from "../hooks/useSortTasks";
-import ButtonsSort from "../WalletSection/ButtonsSort";
 import NormalTxItem from "../WalletSection/TxItem/NormalTxItem";
 import InternalTxItem from "../WalletSection/TxItem/InternalTxItem";
 import { checkBalance, checkNormalTx, checkInternalTx } from "../../store/Explorers";
@@ -12,13 +8,10 @@ import { ReactComponent as External } from "../../assets/external.svg"
 
 type Props = {
   title: string;
-  wallet: Wallet[]
-  // wallet: string;
-  // tasks: Task[] | [];
+  wallet: Wallet[];
 };
 
-const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
-  // const [isListInView1, setIsListInView1] = useState<boolean>(false);  
+const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => { 
   
   const currentWallet = wallet[0];
   

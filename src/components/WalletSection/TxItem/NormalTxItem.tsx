@@ -1,10 +1,5 @@
 import React from "react";
-import { Task } from "../../../interfaces";
-import { Wallet } from "../../../interfaces";
-import { Link } from "react-router-dom";
 import { NormalTxObject } from "../../../interfaces";
-import InfosTask from "./InfosTask";
-import ActionsTaskItem from "./ActionsTaskItem";
 import { ReactComponent as External } from "../../../assets/external.svg"
 
 const NormTxItem: React.FC<{ normalTxObj: NormalTxObject }> = ({

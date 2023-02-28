@@ -1,10 +1,8 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { menusActions } from "../../store/Menu.store";
-import BtnAddTask from "../Utilities/BtnAddTask";
 import BtnAddWallet from "../Utilities/BtnAddWallet";
 import Wallets from "./Wallets/Wallets";
-import NavLinks from "./NavLinks";
 import DarkMode from "./DarkMode";
 import LayoutMenus from "../Utilities/LayoutMenus";
 
@@ -30,7 +28,6 @@ const Menu: React.FC = () => {
         </h1>
         <DarkMode />
         <BtnAddWallet className="mt-8 mx-4" />
-        {/* <NavLinks classActive={classLinkActive} /> */}
         <Wallets classActive={classLinkActive} />
       </header>
     </LayoutMenus>

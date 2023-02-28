@@ -1,12 +1,8 @@
 import React from "react";
-import BtnAddTask from "../Utilities/BtnAddTask";
 import BtnAddWallet from "../Utilities/BtnAddWallet";
 import { ReactComponent as MenuIcon } from "../../assets/menu.svg";
-import avatar1 from "../../assets/avatar-1.jpg";
-import SearchField from "./SearchField";
 import { useAppDispatch } from "../../store/hooks";
 import { menusActions } from "../../store/Menu.store";
-import Notification from "./Notification";
 
 const HeaderWallets: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,17 +46,15 @@ const HeaderWallets: React.FC = () => {
         onClick={openMenuHeaderHandler}
         title="open menu"
       >
-        <MenuIcon />
+        <MenuIcon  className="w-8 h-8"/>
       </button>
-      {/* <SearchField /> */}
       <div className="text-center">
         <span className="text-slate-600 dark:text-slate-200 uppercase font-bold text-sm block xl:hidden">
-          To-do list
+          Wallet Tracker
         </span>
         <time dateTime={dateTimeFormat}>{todayDate}</time>
       </div>
       <div className="flex flex-1 justify-end">
-        {/* <Notification /> */}
         <BtnAddWallet className="sm:static fixed bottom-3 right-3 z-10 sm:z-0 min-w-max shadow-lg shadow-slate-400  dark:shadow-slate-900 sm:shadow-transparent" />
       </div>
     </header>

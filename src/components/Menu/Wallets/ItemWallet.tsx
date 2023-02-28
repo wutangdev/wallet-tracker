@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../../store/hooks";
-import { tasksActions } from "../../../store/Tasks.store";
 import { walletsActions } from "../../../store/Wallets.store";
 import { ReactComponent as Trash } from "../../../assets/trash.svg";
 import { ReactComponent as Edit } from "../../../assets/edit.svg";
 import ModalConfirm from "../../Utilities/ModalConfirm";
-import ModalDirectory from "../../Utilities/ModalDirectory";
 import ModalCreateWallet from "../../Utilities/ModalWallet";
 import { Wallet } from "../../../interfaces";
 
@@ -46,7 +44,7 @@ const ItemWallet: React.FC<{ wallet: any, classActive: string, }> = ({
         <ModalCreateWallet
           onClose={closeModalEditWallet}
           wallet={wallet}
-          nameForm="Edit task"
+          nameForm="Edit wallet"
           onConfirm={editWalletHandler}
         />
       )}
