@@ -3,7 +3,7 @@ import AccountData from "./components/AccountSection/AccountData";
 import Footer from "./components/Footer";
 import Menu from "./components/Menu/Menu";
 import TasksSection from "./components/TasksSection/TasksSection";
-import WalletsSection from "./components/TasksSection/WalletsSection"
+import WalletsSection from "./components/WalletSection/WalletsSection"
 import ModalCreateTask from "./components/Utilities/ModalTask";
 import ModalCreateWallet from "./components/Utilities/ModalWallet";
 import { Task } from "./interfaces";

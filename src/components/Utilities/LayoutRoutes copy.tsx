@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Task } from "../../interfaces";
-import { Wallet, chains, BalanceObject, NormalTxObject } from "../../interfaces";
+import { Wallet, chains } from "../../interfaces";
 import { useAppDispatch } from "../../store/hooks";
 import { modalActions } from "../../store/Modal.store";
 import useSortTasks from "../hooks/useSortTasks";
@@ -20,51 +20,60 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
   // const [isListInView1, setIsListInView1] = useState<boolean>(false);  
   
   const currentWallet = wallet[0];
+
+  interface BalanceObject {
+    chain: string;
+    explorer: string;
+    balance: string;
+    address: string;
+  }
+
+  interface NormalTxObject {
+    result: string[];
+  }
   
   const [balances, setBalances] = useState<BalanceObject[]>();
-  const [normalTxs, setNormalTxs] = useState<NormalTxObject[]>();
+  // const [normalTxs, setNormalTxs] = useState<BalanceObject[]>();
 
   useEffect(() => {
     const handleCheckBalances = async () => {
-      if (!currentWallet) {
-        return; // add a check for undefined currentWallet
+      try {
+        const balancePromises = chains.map((chain, i) => 
+          checkBalance( currentWallet.address, chain.explorer, chain.apiKey).then((balance) => ({
+            chain: chain.ticker,
+            explorer: chain.explorer,
+            balance: balance?.toFixed(2) || '0',
+            address: currentWallet.address,
+          }))      
+        );
+        const balancesArray: BalanceObject[] = await Promise.all(balancePromises);
+        setBalances(balancesArray);
+        console.log(balances)
+      } catch (error) {
+        console.error(error);
       }
-      const balancePromises = chains.map((chain, i) => 
-        checkBalance(currentWallet.address, chain.explorer, chain.apiKey).then((balance) => ({
-          chain: chain.ticker,
-          explorer: chain.explorer,
-          balance: balance?.toFixed(2) || '0',
-          address: currentWallet.address,
-        }))      
-      );
-      const balancesArray: BalanceObject[] = await Promise.all(balancePromises);
-      setBalances(balancesArray);
-      console.log(balances)
     };
     handleCheckBalances();
   }, [currentWallet]);
   
 
-  useEffect(() => {
-    const handleCheckNormalTx = async () => {
-      if (!currentWallet) {
-        return; // add a check for undefined currentWallet
-      }
-      const normalTxsPromises = chains.map((chain, i) => 
-        checkNormalTx(currentWallet.address, chain.explorer, chain.apiKey).then((normalTxs) => ({
-          chain: chain.ticker,
-          explorer: chain.explorer,
-          normalTxs: normalTxs,
-          address: currentWallet.address,
-        }))      
-      );
-      const normalTxsArray: NormalTxObject[] = await Promise.all(normalTxsPromises);
-      setNormalTxs(normalTxsArray);
-      console.log(normalTxsArray)
-    };
-    handleCheckNormalTx();
-    console.log(normalTxs)
-  }, [balances]);
+  // useEffect(() => {
+  //   const handleCheckNormalTx = async () => {
+  //     const normalTxsPromises = chains.map((chain, i) => 
+  //     checkNormalTx( currentWallet.address, chain.explorer, chain.apiKey).then((normalTxs) => ({
+  //         chain: chain.ticker,
+  //         explorer: chain.explorer,
+  //         normalTxs: normalTxs,
+  //         address: currentWallet.address,
+  //       }))      
+  //     );
+  //     const normalTxsArray: NormalTxObject[] = await Promise.all(normalTxsPromises);
+  //     setNormalTxs(normalTxsArray);
+  //     console.log(normalTxsArray)
+  //   };
+  //   handleCheckNormalTx();
+  //   console.log(balances)
+  // }, [wallet]);
 
   
 
@@ -91,11 +100,7 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
       <ul
         className={'mt-4 grid gap-2 sm:gap-4 xl:gap-6 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 items-end'}
       >
-        {normalTxs &&
-          Object.entries(normalTxs).map(([key, value]) => (
-            <TaskItem key={key} normalTxObj={value} />
-          ))
-        }
+        {/* <TaskItem wallet={currentWallet} /> */}
         {/* {sortedTasks.map((task) => (
           <TaskItem key={task.id} isListInView1={isListInView1} task={task} />
         ))} */}

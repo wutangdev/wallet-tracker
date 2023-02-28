@@ -29,3 +29,21 @@ export const chains = [
   apiKey: 'Y7GGGMTD67SW7DJEMXPEA3PHWCJS3DWX94',
   },
 ];
+
+export interface BalanceObject {
+  chain: string;
+  explorer: string;
+  balance: string;
+  address: string;
+}
+
+export interface NormalTxObject {
+  chain: string;
+  explorer: string;
+  normalTxs: {
+    blockHash: string;
+    blockNumber: string;
+    confirmations: string;
+  }[];
+  address: string;  
+}
