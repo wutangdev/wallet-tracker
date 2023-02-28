@@ -21,41 +21,43 @@ const TaskItem: React.FC<{ normalTxObj: NormalTxObject }> = ({
   normalTxObj
 }) => {
   console.log(normalTxObj.normalTxs)
+
+
+
   return (
     <>
-    {/* <p>{normalTxObj.chain}</p>
-    {normalTxObj &&
-      Object.entries(normalTxObj).map(([key, value]) => (
-        <div key={key}>
-          <h3>{value.chain}</h3>
-          <ul>
-            {value.normalTxs.map((tx:any, index:any) => (
-              <li key={index}>{tx.value}</li>
-            ))}
-          </ul>
-        </div>
-      ))
-    } */}
       <li key={normalTxObj.chain}>
         <article
-          className={`bg-slate-100 rounded-lg p-3 sm:p-4 flex text-left transition hover:shadow-lg hover:shadow-slate-300 dark:bg-slate-800 dark:hover:shadow-transparent flex-row sm:h-32`}
+          className={`bg-slate-100 rounded-lg p-3 sm:p-4 text-left transition hover:shadow-lg hover:shadow-slate-300 dark:bg-slate-800 dark:hover:shadow-transparent sm:h-32`}
         >
-          <h1>{normalTxObj.chain}</h1>
-
-          {/* {normalTxs &&
-          Object.entries(normalTxs).map(([key, value]) => (
-            <TaskItem key={key} normalTxObj={value} />
-          ))
-        } */}
+          <h1>{normalTxObj.chain} Normal Transactions</h1>
 
 
         {normalTxObj.normalTxs.map((tx, index) => (
-          <li key={index}>
-            blockHash: {tx.blockHash}, blockNumber: {tx.blockNumber}, confirmations: {tx.confirmations}
-          </li>
+          <ul>
+            <a href={`${normalTxObj.explorer}/tx/${tx.hash}`}>
+            <li className="flex justify-between">
+              {new Date(parseInt(tx.timeStamp) * 1000).toLocaleString()} 
+              
+              <div className="text-right">
+              {(parseInt(tx.value)/ 10 ** 18).toFixed(2) || '0'} {normalTxObj.chain}
+              </div>               
+            </li>
+            </a>
+            
+            {/* <li>
+              {tx.value} {normalTxObj.chain}
+            </li>
+            
+            <li>
+              confirmations: {tx.from}
+            </li> */}
+          </ul>
+
         ))}
         </article>
       </li>
+      
     </>
   );
 };

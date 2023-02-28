@@ -19,20 +19,22 @@ export const chains = [
   {
   chain: 'Binance Smart Chain',
   ticker: 'BSC',
-  explorer: 'https://api.bscscan.com/api',
+  explorer: 'https://bscscan.com/',
+  explorerApi: 'https://api.bscscan.com/api',
   apiKey: 'HT6AWA46V79T7X79A529JEZJ8GP6UP9HQ3',
   },
   {
   chain: 'Ethereum',
   ticker: 'ETH',
-  explorer: 'https://api.etherscan.io/api',
+  explorer: 'https://etherscan.io/',
+  explorerApi: 'https://api.etherscan.io/api',
   apiKey: 'Y7GGGMTD67SW7DJEMXPEA3PHWCJS3DWX94',
   },
 ];
 
 export interface BalanceObject {
   chain: string;
-  explorer: string;
+  explorerApi: string;
   balance: string;
   address: string;
 }
@@ -40,10 +42,12 @@ export interface BalanceObject {
 export interface NormalTxObject {
   chain: string;
   explorer: string;
+  explorerApi: string;
   normalTxs: {
-    blockHash: string;
-    blockNumber: string;
-    confirmations: string;
+    hash: string;
+    timeStamp: string;
+    value: string;
+    from: string;
   }[];
   address: string;  
 }

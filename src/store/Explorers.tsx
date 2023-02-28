@@ -16,10 +16,10 @@ export const checkBalance = async (address:string, explorer:string, apiKey:strin
     }
   };
 
-  export const checkNormalTx = async (address:string, explorer:string, apiKey:string) => {
+  export const checkNormalTx = async (address:string, explorerApi:string, apiKey:string) => {
     try {
       const response = await axios.get(
-        `${explorer}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc&apikey=${apiKey}`
+        `${explorerApi}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=6&sort=desc&apikey=${apiKey}`
       );
       const normalTxData = response.data.result;
       console.log(response.data)

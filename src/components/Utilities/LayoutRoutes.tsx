@@ -30,9 +30,9 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
         return; // add a check for undefined currentWallet
       }
       const balancePromises = chains.map((chain, i) => 
-        checkBalance(currentWallet.address, chain.explorer, chain.apiKey).then((balance) => ({
+        checkBalance(currentWallet.address, chain.explorerApi, chain.apiKey).then((balance) => ({
           chain: chain.ticker,
-          explorer: chain.explorer,
+          explorerApi: chain.explorerApi,
           balance: balance?.toFixed(2) || '0',
           address: currentWallet.address,
         }))      
@@ -47,13 +47,14 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
 
   useEffect(() => {
     const handleCheckNormalTx = async () => {
-      if (!currentWallet) {
+      if (!balances) {
         return; // add a check for undefined currentWallet
       }
       const normalTxsPromises = chains.map((chain, i) => 
-        checkNormalTx(currentWallet.address, chain.explorer, chain.apiKey).then((normalTxs) => ({
+        checkNormalTx(currentWallet.address, chain.explorerApi, chain.apiKey).then((normalTxs) => ({
           chain: chain.ticker,
           explorer: chain.explorer,
+          explorerApi: chain.explorerApi,
           normalTxs: normalTxs,
           address: currentWallet.address,
         }))      
@@ -82,11 +83,14 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
           Object.entries(balances).map(([chain, balanceObj]) => (
             <div className="flex mx-3" key={chain}>
               <p>{balanceObj.chain}: {balanceObj.balance}</p>
-              <a className="mx-0 my-auto pl-1" href={`${balanceObj.explorer}/address/${balanceObj.address}`}>
+              <a className="mx-0 my-auto pl-1" href={`${balanceObj.explorerApi}/address/${balanceObj.address}`}>
                 <External className="w-5 h-5" />
               </a>
             </div>
           ))}
+          {!balances &&
+            <p>Loading...</p>
+          }
         </article>
       <ul
         className={'mt-4 grid gap-2 sm:gap-4 xl:gap-6 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-4 md:grid-cols-3 grid-cols-2 items-end'}
@@ -95,6 +99,9 @@ const LayoutRoutes: React.FC<Props> = ({ title, wallet }) => {
           Object.entries(normalTxs).map(([key, value]) => (
             <TaskItem key={key} normalTxObj={value} />
           ))
+        }
+        {!normalTxs &&        
+          <p>Loading...</p>
         }
         {/* {sortedTasks.map((task) => (
           <TaskItem key={task.id} isListInView1={isListInView1} task={task} />
