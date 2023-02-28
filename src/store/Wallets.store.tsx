@@ -10,15 +10,9 @@ import { Wallet } from "../interfaces";
 const defaultWallets: Wallet[] = [
   {
     id:'0',
-    address: '0x36f88584425679b3Ad54AaAf4b38Ac085507698E',
-    title: 'FullyVoxxed',
-    description: 'wallet of fullyvoxxed',
-  },
-  {
-    id:'1',
-    address: '0x255a3D56b819Bd30A25237Aa8599afa2D700AB91',
-    title: 'Leeks',
-    description: 'wallet of leeks',
+    address: '0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B',
+    title: 'VitaliksWallet',
+    description: 'Wallet belonging to Vitalik Buterin',
   },
 ];
 

@@ -17,7 +17,7 @@ const ContentWallets: React.FC<{ classActive: string }> = ({
   return (
     <>
 
-      <ul className="max-h-36 overflow-auto">
+      <ul className="max-h-full overflow-auto">
         {wallets.map((wallet:any) => (
           <ItemWallet 
             key={wallet.id} 

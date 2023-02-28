@@ -3,6 +3,16 @@ import { Wallet } from "../../interfaces";
 import { useAppSelector } from "../../store/hooks";
 import Modal from "./Modal";
 
+const isValidAddress = (address: string): boolean => {
+  if (!address.match(/^0x[0-9a-fA-F]{40}$/)) {
+    // Address is not the right length or format
+    return false;
+  }
+
+  return true;
+};
+
+
 const ModalCreateWallet: React.FC<{
   onClose: () => void;
   wallet?: Wallet;
@@ -30,18 +40,16 @@ const ModalCreateWallet: React.FC<{
   const [isAddressValid, setIsAddressValid] = useState<boolean>(false);
   const isTitleValid = useRef<boolean>(false);
 
-  const validateAddress = (inputAddress: string) => {
-    // Ethereum address validation logic here
-    // Return true if the address is valid, false otherwise
-    // For example:
-    return inputAddress.startsWith("0x") && inputAddress.length === 42;
+  const handleAddressChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setAddress(value);
+    setIsAddressValid(await isValidAddress(value));
   };
 
-  const addNewWalletHandler = (event: React.FormEvent): void => {
+  const addNewWalletHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
     isTitleValid.current = title.trim().length > 0;
-    setIsAddressValid(validateAddress(address));
 
     if (isTitleValid.current && isAddressValid) {
       const newWallet: Wallet = {
@@ -58,10 +66,7 @@ const ModalCreateWallet: React.FC<{
 
   return (
     <Modal onClose={onClose} title={nameForm}>
-      <form
-        className="flex flex-col stylesInputsField"
-        onSubmit={addNewWalletHandler}
-      >
+      <form className="flex flex-col stylesInputsField" onSubmit={addNewWalletHandler}>
         <label>
           Title
           <input
@@ -80,11 +85,11 @@ const ModalCreateWallet: React.FC<{
             placeholder="0x000..."
             required
             value={address}
-            onChange={({ target }) => setAddress(target.value)}
+            onChange={handleAddressChange}
             className="w-full"
           />
-          {!isAddressValid && (
-            <span className="text-red-500">Invalid address format</span>
+          {address && !isAddressValid && (
+            <span className="text-red-500">Invalid Ethereum address</span>
           )}
         </label>
         <label>
