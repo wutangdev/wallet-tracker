@@ -51,3 +51,16 @@ export interface NormalTxObject {
   }[];
   address: string;  
 }
+
+export interface InternalTxObject {
+  chain: string;
+  explorer: string;
+  explorerApi: string;
+  internalTxs: {
+    hash: string;
+    timeStamp: string;
+    value: string;
+    from: string;
+  }[];
+  address: string;  
+}

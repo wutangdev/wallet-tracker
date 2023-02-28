@@ -52,7 +52,7 @@ const ModalDirectory: React.FC<{
             }
           />
           {errorDirectoryName && (
-            <div className="absolute bg-rose-500 text-slate-200 rounded-md p-2 top-full text-sm w-full font-medium z-20">
+            <div className="absolute bg-cyan-500 text-slate-200 rounded-md p-2 top-full text-sm w-full font-medium z-20">
               Directory name already exists
             </div>
           )}

@@ -14,7 +14,7 @@ const TaskItem: React.FC<{ isListInView1: boolean; task: Task }> = ({
         <Link
           to={`/dir/${task.dir}`}
           title={task.dir}
-          className="ml-auto mr-4 w-min whitespace-nowrap overflow-hidden max-w-[10rem] text-center text-ellipsis bg-rose-200 text-rose-600 px-4 py-1 rounded-t-md transition dark:bg-slate-700 dark:text-slate-200 block hover:bg-rose-300 dark:hover:bg-rose-500"
+          className="ml-auto mr-4 w-min whitespace-nowrap overflow-hidden max-w-[10rem] text-center text-ellipsis bg-cyan-200 text-cyan-600 px-4 py-1 rounded-t-md transition dark:bg-slate-700 dark:text-slate-200 block hover:bg-cyan-300 dark:hover:bg-cyan-500"
         >
           {task.dir}
         </Link>

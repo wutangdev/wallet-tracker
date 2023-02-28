@@ -65,7 +65,7 @@ const ItemWallet: React.FC<{ wallet: any, classActive: string, }> = ({
         <NavLink
           to={`/wallet/${wallet.title}`}
           title={wallet.title}
-          className="hover:text-rose-600 dark:hover:text-slate-200 transition text-ellipsis whitespace-nowrap overflow-hidden max-w-[7rem]"
+          className="hover:text-cyan-600 dark:hover:text-slate-200 transition text-ellipsis whitespace-nowrap overflow-hidden max-w-[7rem]"
         >
           {wallet.title}
         </NavLink>

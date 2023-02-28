@@ -9,8 +9,6 @@ const ModalCreateWallet: React.FC<{
   nameForm: string;
   onConfirm: (wallet: Wallet) => void;
 }> = ({ onClose, wallet, nameForm, onConfirm }) => {
-
-
   const [description, setDescription] = useState<string>(() => {
     if (wallet) {
       return wallet.description;
@@ -29,14 +27,23 @@ const ModalCreateWallet: React.FC<{
     }
     return "";
   });
-  const isTitleValid = useRef<Boolean>(false);
+  const [isAddressValid, setIsAddressValid] = useState<boolean>(false);
+  const isTitleValid = useRef<boolean>(false);
+
+  const validateAddress = (inputAddress: string) => {
+    // Ethereum address validation logic here
+    // Return true if the address is valid, false otherwise
+    // For example:
+    return inputAddress.startsWith("0x") && inputAddress.length === 42;
+  };
 
   const addNewWalletHandler = (event: React.FormEvent): void => {
     event.preventDefault();
 
     isTitleValid.current = title.trim().length > 0;
+    setIsAddressValid(validateAddress(address));
 
-    if (isTitleValid.current ) {
+    if (isTitleValid.current && isAddressValid) {
       const newWallet: Wallet = {
         title: title,
         description: description,
@@ -45,9 +52,10 @@ const ModalCreateWallet: React.FC<{
       };
       onConfirm(newWallet);
       onClose();
-      console.log(newWallet)
+      console.log(newWallet);
     }
   };
+
   return (
     <Modal onClose={onClose} title={nameForm}>
       <form
@@ -75,6 +83,9 @@ const ModalCreateWallet: React.FC<{
             onChange={({ target }) => setAddress(target.value)}
             className="w-full"
           />
+          {!isAddressValid && (
+            <span className="text-red-500">Invalid address format</span>
+          )}
         </label>
         <label>
           Description (optional)
@@ -85,7 +96,7 @@ const ModalCreateWallet: React.FC<{
             onChange={({ target }) => setDescription(target.value)}
           ></textarea>
         </label>
-        <button type="submit" className="btn mt-5">
+        <button type="submit" className="btn mt-5" disabled={!isAddressValid}>
           {nameForm}
         </button>
       </form>

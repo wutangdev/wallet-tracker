@@ -48,7 +48,7 @@ const ContentDirectories: React.FC<{ classActive: string }> = ({
       </ul>
       <button
         onClick={() => setModalDirIsShown(true)}
-        className="px-3 py-1 border-slate-300 dark:border-slate-700 border-2 ml-9 mt-2 rounded-md border-dashed hover:text-violet-500"
+        className="px-3 py-1 border-slate-300 dark:border-slate-700 border-2 ml-9 mt-2 rounded-md border-dashed hover:text-teal-500"
       >
         + New
       </button>

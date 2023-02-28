@@ -12,7 +12,7 @@ const ItemSearch: React.FC<{ task: Task }> = ({ task }) => {
     <li key={task.id} className="py-2">
       <Link
         to={`/task/${task.id}`}
-        className="flex justify-between transition hover:text-rose-500 dark:hover:text-slate-200"
+        className="flex justify-between transition hover:text-cyan-500 dark:hover:text-slate-200"
       >
         <span>{task.title}</span>
         <span>{dateFormated}</span>
@@ -80,7 +80,7 @@ const SearchField: React.FC = () => {
                 </ul>
                 <button
                   onClick={navigateToSearchResults}
-                  className="bg-rose-100 w-full p-2 rounded-md text-rose-600 dark:bg-slate-700/[.3] dark:text-slate-200"
+                  className="bg-cyan-100 w-full p-2 rounded-md text-cyan-600 dark:bg-slate-700/[.3] dark:text-slate-200"
                 >
                   All results for "{searchInputValue}"
                 </button>
