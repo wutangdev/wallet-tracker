@@ -2,6 +2,7 @@ import React from "react";
 import Menu from "./components/Menu/Menu";
 import WalletsSection from "./components/WalletSection/WalletsSection"
 import ModalCreateWallet from "./components/Utilities/ModalWallet";
+import Footer from "./components/Footer";
 import { Wallet } from "./interfaces";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { modalActions } from "./store/Modal.store";
@@ -33,6 +34,7 @@ const App: React.FC = () => {
       )}
       <Menu />
       <WalletsSection />
+      <Footer/>
     </div>
   );
 };
